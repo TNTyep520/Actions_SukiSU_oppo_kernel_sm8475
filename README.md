@@ -1,5 +1,10 @@
 ## **Actions_SukiSU_oppo_kernel_sm8475**
 #####
+
+[![Build](https://img.shields.io/badge/GitHub%20Actions-Build-181717?logo=github&logoColor=white&style=flat-square)](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/actions)
+[![Coolapk](https://img.shields.io/badge/Follow-Coolapk-3DDC84?style=flat-square&logo=android&logoColor=white)](http://www.coolapk.com/u/33593713)
+[![QQ](https://img.shields.io/badge/Follow-QQ-8A2BE2?&style=flat-square)](https://qm.qq.com/q/lOpUx9iaWI)
+#####
 **```Build SM8475 For OPPO Devices SukiSU Ultra Kernel```**
 #####
 **一个更方便、快捷的自动化 OPPO 系列骁龙 8+ Gen 1(SM8475)平台机型的通用内核编译脚本。**
@@ -39,5 +44,5 @@
 **感谢以上大佬们对这些项目的付出!**
 #####
 ## **项目所使用的 OPPO 开源内核：**
-- **OPPO SM8475 Kernel Open Source开源地址：[oppo-source/android_kernel_oppo_sm8475](https://github.com/oppo-source/android_kernel_oppo_sm8475)**
-- **OPPO SM8475 Common Kernel Open Source开源地址：[oppo-source/android_common_oppo_sm8475](https://github.com/oppo-source/android_common_oppo_sm8475)**
+- **OPPO SM8475 Kernel Open Source 开源地址：[oppo-source/android_kernel_oppo_sm8475](https://github.com/oppo-source/android_kernel_oppo_sm8475)**
+- **OPPO SM8475 Common Kernel Open Source 开源地址：[oppo-source/android_kernel_common_oppo_sm8475](https://github.com/oppo-source/android_kernel_common_oppo_sm8475)**
