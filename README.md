@@ -19,6 +19,16 @@
 >- **关于 Actions 要跑多久，个人觉得用 clang+ccache 编译器跑的速度就快，实测跑完需要 19-35 分钟，最久可达 42 分钟，而官方给的 Bazel 编译器过于逆天，速度为 29-35 分钟，最久可达到将近一个小时，且容易血亏(指 Bazel 编译的时候报错)。**
 >- **本项目不会提供 Bazel 编译方式，而是使用 clang+ccache 的编译方式**
 #####
+## **食用方法：**
+- **创建你的 Github 账号(有账号的登录就行)**
+- **右上角 fork 仓库
+[![fork](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/fork.png)]**
+- **右上角三个点
+[![dots_right_corner](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/dots_right_corner.png)],选择 Actions
+[![Action](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/Actions.png)],创建一个编译**
+- **配置你的 Actions**
+- **等待跑完代码,下载带有 AnyKernel3 的内核压缩包,若开启 ZRAM 算法请一并下载 ZRAM 模块,在刷入 AnyKernel3 内核前请先刷入 ZRAM 模块，然后再刷入 AnyKernel 内核**
+#####
 ## **更新日志：**
 - [x] **添加 KPM,VFS,ZRAM,Sufus 补丁的支持**
 - [x] **添加对 OPPO Reno9 Pro Plus(OPPO Reno9 Pro+) 机型的编译**
