@@ -7,7 +7,7 @@
 #####
 **```Build SM8475 For OPPO Devices SukiSU Ultra Kernel```**
 #####
-**一个更方便、快捷的自动化 OPPO 系列骁龙 8+ Gen 1(SM8475)平台机型的通用内核编译脚本。**
+**更方便,更快捷的自动化 OPPO 系列骁龙 8+ Gen 1(SM8475)平台机型的通用内核编译脚本。**
 #####
 ## **Tips:**
 - **由于傻逼绿厂摆烂，开源的内核只他妈开源到一半，不学一加一样整个 manifest 合集，导致有些东西死活都编译不了，来来回回折腾大半天**
@@ -21,11 +21,12 @@
 #####
 ## **食用方法：**
 - **创建你的 Github 账号(有账号的登录就行)**
-- **右上角 fork 仓库
-[![fork](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/fork.png)]**
+- **右上角 fork 仓库**
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/fork.png" width="150"/>
+
 - **右上角三个点
-[![dots_right_corner](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/dots_right_corner.png)],选择 Actions
-[![Action](https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/Actions.png)],创建一个编译**
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/dots_right_corner.png" width="150"/>,选择 Actions
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/Actions.png" width="150"/>,创建一个编译**
 - **配置你的 Actions**
 - **等待跑完代码,下载带有 AnyKernel3 的内核压缩包,若开启 ZRAM 算法请一并下载 ZRAM 模块,在刷入 AnyKernel3 内核前请先刷入 ZRAM 模块，然后再刷入 AnyKernel 内核**
 #####
