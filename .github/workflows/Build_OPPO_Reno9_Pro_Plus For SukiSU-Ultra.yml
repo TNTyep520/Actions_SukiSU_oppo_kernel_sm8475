@@ -42,20 +42,20 @@ jobs:
    build:
     runs-on: ubuntu-latest
    env:
-    CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
-    CCACHE_NOHASHDIR: "true"
-    CCACHE_HARDLINK: "true"
-    CCACHE_MAXSIZE: 8G
+     CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+     CCACHE_NOHASHDIR: "true"
+     CCACHE_HARDLINK: "true"
+     CCACHE_MAXSIZE: 8G
    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+     - name: Checkout
+       uses: actions/checkout@v4
 
-      - name: Check Disk Space
-        run: df -h
+     - name: Check Disk Space
+       run: df -h
 
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
+     - name: Maximize build space
+       uses: easimon/maximize-build-space@master
+       with:
          root-reserve-mb: 8192
          temp-reserve-mb: 2048
          swap-size-mb: 8192
@@ -64,22 +64,22 @@ jobs:
          remove-haskell: 'true'
          remove-codeql: 'true'
 
-       - name: Create and Enable 4G Swap
-         run: |
+      - name: Create and Enable 4G Swap
+        run: |
            sudo swapoff -a
            sudo fallocate -l 4G /swapfile
            sudo chmod 600 /swapfile
            sudo mkswap /swapfile
            sudo swapon /swapfile
 
-       - name: Set Cache Environment
-         run: |
+      - name: Set Cache Environment
+        run: |
           echo "CCACHE_DIR=$HOME/.ccache_reno9_pro_plus" >> $GITHUB_ENV
           mkdir -p "$HOME/.ccache_reno9_pro_plus"
           echo "set: $HOME/.ccache_reno9_pro_plus"
 
-       - name: Configure APTC
-         run: |
+      - name: Configure APTC
+        run: |
           APT_CACHE_DIR="$HOME/apt-cache"
           mkdir -p "$APT_CACHE_DIR"/{archives,lists/partial}
           echo "Dir::Cache \"$APT_CACHE_DIR\";" | sudo tee /etc/apt/apt.conf.d/90user-cache
@@ -89,16 +89,16 @@ jobs:
           echo "Acquire::Languages \"none\";" | sudo tee -a /etc/apt/apt.conf.d/90user-cache
           sudo chown -R $USER:$USER "$APT_CACHE_DIR"
 
-       - name: Set APT Cache
-         uses: actions/cache@v3
+      - name: Set APT Cache
+        uses: actions/cache@v3
          with:
           path: ${{ env.HOME }}/apt-cache
           key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/Build_OPPO_Reno9_Pro_Plus For SukiSU-Ultra.yml') }}
           restore-keys: |
             ${{ runner.os }}-apt-
 
-        - name: Install and Config Dependencies
-          run: |
+       - name: Install and Config Dependencies
+         run: |
            sudo rm -f /var/lib/apt/lists/lock /var/lib/dpkg/lock
            APT_CACHE_DIR="$HOME/apt-cache"
            mkdir -p "$APT_CACHE_DIR/lists/partial"
@@ -114,14 +114,14 @@ jobs:
            sudo chmod +x llvm.sh
            sudo sudo ./llvm.sh 20 all
 
-        - name: Restore Ccache
-          uses: actions/cache@v3
+       - name: Restore Ccache
+         uses: actions/cache@v3
           with:
            path: ${{ env.CCACHE_DIR }}
            key: ccache-${{ runner.os }}-${{ github.ref_name }}-reno9_pro_plus-${{ env.BUILD_METHOD }}
 
-        - name: Initialize Ccache
-          run: |
+       - name: Initialize Ccache
+         run: |
            INIT_FLAG="${{ env.CCACHE_DIR }}/.ccache_initialized"
            if command -v ccache >/dev/null 2>&1; then
              if [ ! -f "$INIT_FLAG" ]; then
@@ -139,8 +139,8 @@ jobs:
            ccache -s
 
         # 拉取内核源码 && 去除 ABI 保护 && -dirty 后缀
-        - name: Pull Kernel Open Source
-          run: |
+       - name: Pull Kernel Open Source
+         run: |
            cd $HOME
            rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
            git clone --depth=1 https://github.com/oppo-source/android_kernel_oppo_sm8475 -b oppo/sm8475_v_15.0.0_reno9_pro_plus msm-kernel
@@ -155,8 +155,8 @@ jobs:
            git commit -m "Force remove -dirty suffix from kernel version"
 
         # 添加 SukiSU Ultra
-        - name: Add SukiSU Ultra
-          run: |
+       - name: Add SukiSU Ultra
+         run: |
            BRANCH_NAME="${META%%/*}"
            CUSTOM_TAG="${META#*/}"
            echo "分支名: $BRANCH_NAME"
@@ -205,8 +205,8 @@ jobs:
 
 
         # 应用 SukiSU Ultra && Sufus,Lz4k 补丁
-        - name: Patch SukiSU Ultra && Sufus,Lz4k
-          run: |
+      - name: Patch SukiSU Ultra && Sufus,Lz4k
+        run: |
            cd $HOME && cd kernel_workspace
            git clone https://github.com/ShirkNeko/susfs4ksu.git -b gki-android12-5.10
            git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git
@@ -222,82 +222,82 @@ jobs:
            patch -p1 < syscall_hooks.patch || true
 
         # 应用 Hide Stuff 补丁
-        - name: Apply Hide Stuff Patches
-          run: |
+      - name: Apply Hide Stuff Patches
+        run: |
            cd kernel_workspace/common
            cp ../../SukiSU_patch/69_hide_stuff.patch ./
            patch -p1 -F 3 < 69_hide_stuff.patch
 
         # Convert OGKI to GKI,Fuck You dtbo
-        - name: Apply Convert OGKI to GKI
-          run: |
+       - name: Apply Convert OGKI to GKI
+         run: |
            cd kernel_workspace/common
            sed -i '1iobj-y += hmbird_patch.o' drivers/Makefile
            wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/hmbird_patch.patch
            patch -p1 -F 3 < hmbird_patch.patch
         
-        - name: Apply VFS
-          if: ${{ github.event.inputs.VFS == 'true' }}
-          run: |
+       - name: Apply VFS
+         if: ${{ github.event.inputs.VFS == 'true' }}
+         run: |
            cd kernel_workspace/common
            cp ../../SukiSU_patch/hooks/syscall_hooks.patch ./
            patch -p1 -F 3 < syscall_hooks.patch
         
-        - name: Apply ZRAM
-          if: ${{ github.event.inputs.ZRAM == 'true' }}
-          run: |
+       - name: Apply ZRAM
+         if: ${{ github.event.inputs.ZRAM == 'true' }}
+         run: |
            cd kernel_workspace/common
            cp ../../SukiSU_patch/other/zram/zram_patch/5.10/lz4kd.patch
            patch -p1 -F 3 < lz4kd.patch || true
            cp ../../SukiSU_patch/other/zram/zram_patch/5.10/lz4k_oplus.patch
            patch -p1 -F 3 < lz4k_oplus.patch || true
 
-        - name: Apply lz4 && zstd
-           if ${{ github.event.inputs.LZ4 == 'true' }}
-           run: |
-            cd kernel_workspace
-            wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/lz4/001-lz4.patch
-            wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/lz4/lz4armv8.S
-            wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/zstd/002-zstd.patch
-            cp 001-lz4.patch ./common/
-            cp lz4armv8.S ./common/lib
-            cp 002-zstd.patch ./common/
-            cd ./common
-            git apply -p1 < 001-lz4.patch || true
-            patch -p1 < 002-zstd.patch || true
+       - name: Apply lz4 && zstd
+         if ${{ github.event.inputs.LZ4 == 'true' }}
+         run: |
+           cd kernel_workspace
+           wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/lz4/001-lz4.patch
+           wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/lz4/lz4armv8.S
+           wget https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/Patches/zram_patch/zstd/002-zstd.patch
+           cp 001-lz4.patch ./common/
+           cp lz4armv8.S ./common/lib
+           cp 002-zstd.patch ./common/
+           cd ./common
+           git apply -p1 < 001-lz4.patch || true
+           patch -p1 < 002-zstd.patch || true
 
-        - name: Custom Kernel Suffix if set
-          if [ "${{ github.event.inputs.KERNEL_SUFFIX }}" = "true" ]; then
-            echo "当前内核版本后缀：${{ github.event.inputs.KERNEL_SUFFIX }}"
-             for f in ./common/scripts/setlocalversion; do
-               sed -i "\$s|echo \"\\\$res\"|echo \"-${{ github.event.inputs.KERNEL_SUFFIX }}\"|" "$f"
-             done
-           else
-            RANDOM_DIGIT=$(od -An -N1 -tu1 < /dev/urandom | tr -d '[:space:]' | awk '{print $1 % 11}')
-            RANDOM_HASH=$(od -An -N7 -tx1 /dev/urandom | tr -d ' \n')
-            RANDOM_SUFFIX="${RANDOM_DIGIT}-o-g${RANDOM_HASH}"
+       - name: Custom Kernel Suffix if set
+         if [ "${{ github.event.inputs.KERNEL_SUFFIX }}" = "true" ]; then
+           echo "当前内核版本后缀：${{ github.event.inputs.KERNEL_SUFFIX }}"
+            for f in ./common/scripts/setlocalversion; do
+              sed -i "\$s|echo \"\\\$res\"|echo \"-${{ github.event.inputs.KERNEL_SUFFIX }}\"|" "$f"
+            done
+          else
+           RANDOM_DIGIT=$(od -An -N1 -tu1 < /dev/urandom | tr -d '[:space:]' | awk '{print $1 % 11}')
+           RANDOM_HASH=$(od -An -N7 -tx1 /dev/urandom | tr -d ' \n')
+           RANDOM_SUFFIX="${RANDOM_DIGIT}-o-g${RANDOM_HASH}"
 
-           for path in \
-            ./common/scripts/setlocalversion \
-            ./msm-kernel/scripts/setlocalversion \
+          for path in \
+           ./common/scripts/setlocalversion \
+           ./msm-kernel/scripts/setlocalversion \
 
-             [ -f "$path" ] || continue
+            [ -f "$path" ] || continue
 
-             echo "Modifying: $path"
+            echo "Modifying: $path"
 
-             if grep -q 'KERNELVERSION.*scm_version' "$path"; then
-               echo "Detected NEW setlocalversion format"
-               sed -i "s|echo \"\${KERNELVERSION}.*scm_version}\"|echo \"\${KERNELVERSION}-android12-${RANDOM_SUFFIX}\"|" "$path"
+            if grep -q 'KERNELVERSION.*scm_version' "$path"; then
+             echo "Detected NEW setlocalversion format"
+             sed -i "s|echo \"\${KERNELVERSION}.*scm_version}\"|echo \"\${KERNELVERSION}-android12-${RANDOM_SUFFIX}\"|" "$path"
 
-             elif grep -q 'echo "\$res"' "$path"; then
-               echo "Detected OLD setlocalversion format"
-                 echo "FAST_BUILD enabled: using static res with random suffix"
-                 sed -i "s/^res=.*/res=\"-android12-${RANDOM_SUFFIX}\"/" "$path"
-             fi
-             done
+            elif grep -q 'echo "\$res"' "$path"; then
+             echo "Detected OLD setlocalversion format"
+               echo "FAST_BUILD enabled: using static res with random suffix"
+                sed -i "s/^res=.*/res=\"-android12-${RANDOM_SUFFIX}\"/" "$path"
+            fi
+            done
 
-        - name: Configuration Settings
-          run: |
+       - name: Configuration Settings
+         run: |
            cd kernel_workspace
            CONFIG_FILE=./common/arch/arm64/configs/gki_defconfig
            KERNEL_VERSION="5.10"
@@ -381,8 +381,8 @@ jobs:
            # 禁用 defconfig 审查
            sed -i 's/check_defconfig//' ./common/build.config.gki
 
-        - name: Build Kernel
-          run: |
+       - name: Build Kernel
+         run: |
            CLANG_PATH="clang-r416183b"
            CLANG_DIR="prebuilts-master"
            USE_LLVM_IAS=true
@@ -402,8 +402,8 @@ jobs:
            make -j$(nproc --all) O=out $MAKE_ARGS
            ccache -s
         
-        - name: Make AnyKernel3
-          run: |
+       - name: Make AnyKernel3
+         run: |
            git clone https://github.com/Numbersf/AnyKernel3 --depth=1
            rm -rf ./AnyKernel3/.git
            mkdir -p kernel_workspace/out/Final-Image-Find/
@@ -424,9 +424,9 @@ jobs:
              cp "$image_path" kernel_workspace/out/Final-Image-Find/Image
            fi
 
-        - name: Apply patch_linux and replace Image
-          if: ${{ github.event.inputs.KPM == 'true' }}
-          run: |
+       - name: Apply patch_linux and replace Image
+         if: ${{ github.event.inputs.KPM == 'true' }}
+         run: |
            cd kernel_workspace/out/Final-Image-Find
            curl -LO --retry 5 --retry-delay 2 --retry-connrefused https://raw.githubusercontent.com/Numbersf/Action-Build/SukiSU-Ultra/patches/patch_linux
            chmod +x patch_linux
@@ -435,10 +435,10 @@ jobs:
            mv oImage Image
            cp Image $GITHUB_WORKSPACE/AnyKernel3/Image
 
-        - name: Download Latest SUSFS Module from CI
-          if: ${{ github.event.inputs.SUSFS_CI == 'CI' }}
-          continue-on-error: true
-          run: |
+       - name: Download Latest SUSFS Module from CI
+         if: ${{ github.event.inputs.SUSFS_CI == 'CI' }}
+         continue-on-error: true
+         run: |
            LATEST_RUN_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
              "https://api.github.com/repos/sidex15/susfs4ksu-module/actions/runs?status=success" | \
              jq -r '.workflow_runs[] | select(.head_branch == "v1.5.2+") | .id' | head -n 1)
@@ -455,55 +455,55 @@ jobs:
              fi
            fi
 
-        - name: Upload AnyKernel3
-          uses: actions/upload-artifact@v4
-          with:
-           name: AnyKernel3_SukiSUUltra_${{ env.KSUVER }}_${{ steps.file_clean.outputs.value }}${{ steps.suffix.outputs.value }}
-           path: ./AnyKernel3/*
+       - name: Upload AnyKernel3
+         uses: actions/upload-artifact@v4
+         with:
+          name: AnyKernel3_SukiSUUltra_${{ env.KSUVER }}_${{ steps.file_clean.outputs.value }}${{ steps.suffix.outputs.value }}
+          path: ./AnyKernel3/*
 
-        - name: Download and Unzip ZRAM
-          if: ${{ github.event.inputs.ZRAM == 'true' }}
-          id: zram_find
-          run: |
-           set -e
-           sudo apt install -y unzip
-           curl -s https://api.github.com/repos/FurLC/ZRAM-Module/releases/latest | \
-             grep "browser_download_url" | grep "ZRAM-Module-.*\.zip" | cut -d '"' -f 4 | xargs wget -N
-           unzip "$(ls -t ZRAM-Module-*.zip | head -1)" -d ZRAM-Module
-           target="./ZRAM-Module/zram/zram.ko"
-           echo "查找 zram.ko 模块文件..."
-           search_paths=(
-             "./kernel_workspace/out"
-             "./kernel_workspace/device/qcom"
-           )
-           zram_path=""
-           for path in "${search_paths[@]}"; do
-             zram_path=$(find "$path" -type f -name "zram.ko" | head -n 1)
-             [ -n "$zram_path" ] && break
-           done
-           if [ -z "$zram_path" ]; then
-             zram_path=$(find "./kernel_workspace" -type f -name "zram.ko" | head -n 1)
-           fi
-           if [ -n "$zram_path" ] && [ -f "$zram_path" ]; then
-             echo " ZRAM module file finally located at: $zram_path "
-             mkdir -p "$(dirname "$target")"
-             if [ "$(realpath "$zram_path")" != "$(realpath "$target")" ]; then
-               cp "$zram_path" "$target"
-             else
-               echo "源文件与目标路径相同，跳过复制"
-             fi
+       - name: Download and Unzip ZRAM
+         if: ${{ github.event.inputs.ZRAM == 'true' }}
+         id: zram_find
+         run: |
+          set -e
+          sudo apt install -y unzip
+          curl -s https://api.github.com/repos/FurLC/ZRAM-Module/releases/latest | \
+            grep "browser_download_url" | grep "ZRAM-Module-.*\.zip" | cut -d '"' -f 4 | xargs wget -N
+          unzip "$(ls -t ZRAM-Module-*.zip | head -1)" -d ZRAM-Module
+          target="./ZRAM-Module/zram/zram.ko"
+          echo "查找 zram.ko 模块文件..."
+          search_paths=(
+            "./kernel_workspace/out"
+            "./kernel_workspace/device/qcom"
+          )
+          zram_path=""
+          for path in "${search_paths[@]}"; do
+            zram_path=$(find "$path" -type f -name "zram.ko" | head -n 1)
+            [ -n "$zram_path" ] && break
+          done
+          if [ -z "$zram_path" ]; then
+            zram_path=$(find "./kernel_workspace" -type f -name "zram.ko" | head -n 1)
+          fi
+          if [ -n "$zram_path" ] && [ -f "$zram_path" ]; then
+            echo " ZRAM module file finally located at: $zram_path "
+            mkdir -p "$(dirname "$target")"
+            if [ "$(realpath "$zram_path")" != "$(realpath "$target")" ]; then
+             cp "$zram_path" "$target"
+            else
+              echo "源文件与目标路径相同，跳过复制"
+            fi
            else
-             echo "未找到 zram.ko 文件，可能是未支持的内核版本或者未成功构建"
-             echo "upload=false" >> "$GITHUB_OUTPUT"
-             exit 0
+            echo "未找到 zram.ko 文件，可能是未支持的内核版本或者未成功构建"
+            echo "upload=false" >> "$GITHUB_OUTPUT"
+            exit 0
            fi
 
-        - name: Upload ZRAM Module
-          if: ${{ github.event.inputs.ZRAM == 'true' && steps.zram_find.outputs.upload != 'false' }}
-          uses: actions/upload-artifact@v4
-          with:
+       - name: Upload ZRAM Module
+         if: ${{ github.event.inputs.ZRAM == 'true' && steps.zram_find.outputs.upload != 'false' }}
+         uses: actions/upload-artifact@v4
+         with:
            name: ZRAM-Module_android12_${{ steps.file_clean.outputs.value }}
            path: ZRAM-Module/*
 
-        - name: Post-build Disk Check
-          run: df -h
+       - name: Post-build Disk Check
+         run: df -h
