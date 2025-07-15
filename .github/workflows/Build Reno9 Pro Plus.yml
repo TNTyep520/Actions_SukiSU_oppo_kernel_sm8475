@@ -1,7 +1,7 @@
 name: Build Reno9 Pro Plus
 on:
   workflow_dispatch:
-      inputs:
+    inputs:
     KSU_META:
       type: string
       description: "分支/自定义版本标识"
