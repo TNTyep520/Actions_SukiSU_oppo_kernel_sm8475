@@ -97,8 +97,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-apt-
 
-       - name: Install and Config Dependencies
-         run: |
+      - name: Install and Config Dependencies
+        run: |
            sudo rm -f /var/lib/apt/lists/lock /var/lib/dpkg/lock
            APT_CACHE_DIR="$HOME/apt-cache"
            mkdir -p "$APT_CACHE_DIR/lists/partial"
