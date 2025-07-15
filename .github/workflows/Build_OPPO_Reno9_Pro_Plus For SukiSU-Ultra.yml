@@ -46,7 +46,7 @@ jobs:
     CCACHE_NOHASHDIR: "true"
     CCACHE_HARDLINK: "true"
     CCACHE_MAXSIZE: 8G
-    steps:
+   steps:
       - name: Checkout
         uses: actions/checkout@v4
 
