@@ -458,8 +458,8 @@ jobs:
     - name: Upload AnyKernel3
       uses: actions/upload-artifact@v4
       with:
-      name: AnyKernel3_SukiSUUltra_${{ env.KSUVER }}_${{ steps.file_clean.outputs.value }}${{ steps.suffix.outputs.value }}
-      path: ./AnyKernel3/*
+        name: AnyKernel3_SukiSUUltra_${{ env.KSUVER }}_${{ steps.file_clean.outputs.value }}${{ steps.suffix.outputs.value }}
+        path: ./AnyKernel3/*
 
     - name: Download and Unzip ZRAM
       if: ${{ github.event.inputs.ZRAM == 'true' }}
