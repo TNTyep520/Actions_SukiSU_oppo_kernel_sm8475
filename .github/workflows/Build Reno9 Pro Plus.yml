@@ -1,8 +1,8 @@
 name: Build Reno9 Pro Plus
 on:
   workflow_dispatch:
-    inputs:
-    SUKISU_META:
+      inputs:
+    KSU_META:
       type: string
       description: "分支/自定义版本标识"
       required: false
@@ -117,8 +117,8 @@ jobs:
     - name: Restore Ccache
       uses: actions/cache@v3
       with:
-      path: ${{ env.CCACHE_DIR }}
-      key: ccache-${{ runner.os }}-${{ github.ref_name }}-reno9_pro_plus-${{ env.BUILD_METHOD }}
+        path: ${{ env.CCACHE_DIR }}
+        key: ccache-${{ runner.os }}-${{ github.ref_name }}-reno9_pro_plus-${{ env.BUILD_METHOD }}
 
     - name: Initialize Ccache
       run: |
