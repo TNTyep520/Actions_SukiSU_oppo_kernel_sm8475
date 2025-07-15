@@ -142,12 +142,9 @@ jobs:
     # 拉取内核源码 && 去除 ABI 保护 && -dirty 后缀
     - name: Pull Kernel Open Source
       run: |
-       cd $HOME
        rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
        git clone --depth=1 https://github.com/oppo-source/android_kernel_oppo_sm8475 -b oppo/sm8475_v_15.0.0_reno9_pro_plus msm-kernel
        git clone --depth=1 https://github.com/oppo-source/android_kernel_common_oppo_sm8475 -b oppo/sm8475_v_15.0.0_reno9_pro_plus common
-       rm common/android/abi_gki_protected_exports_* || true
-       rm msm-kernel/android/abi_gki_protected_exports_* || true
        sed -i 's/ -dirty//g' common/scripts/setlocalversion
        sed -i 's/ -dirty//g' msm-kernel/scripts/setlocalversion
        sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' common/scripts/setlocalversion
