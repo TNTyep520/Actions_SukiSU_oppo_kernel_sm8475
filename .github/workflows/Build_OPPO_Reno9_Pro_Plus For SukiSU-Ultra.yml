@@ -40,12 +40,12 @@ on:
 
 jobs:
    build:
-      jobs:
-      env:
-      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
-      CCACHE_NOHASHDIR: "true"
-      CCACHE_HARDLINK: "true"
-      CCACHE_MAXSIZE: 8G
+    runs-on: ubuntu-latest
+   env:
+    CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+    CCACHE_NOHASHDIR: "true"
+    CCACHE_HARDLINK: "true"
+    CCACHE_MAXSIZE: 8G
     steps:
       - name: Checkout
         uses: actions/checkout@v4
