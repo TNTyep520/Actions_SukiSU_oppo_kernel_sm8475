@@ -21,14 +21,23 @@
 #####
 ## **食用方法：**
 - **创建你的 Github 账号(有账号的登录就行)**
-- **右上角 fork 仓库**
-<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/fork.png" width="150"/>
-
-- **右上角三个点
-<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/dots_right_corner.png" width="150"/>,选择 Actions
-<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/Actions.png" width="150"/>,创建一个编译**
+- **左上角 fork 仓库**
+- **右上角三个点,选择 Actions,创建一个编译**
 - **配置你的 Actions**
 - **等待跑完代码,下载带有 AnyKernel3 的内核压缩包,若开启 ZRAM 算法请一并下载 ZRAM 模块,在刷入 AnyKernel3 内核前请先刷入 ZRAM 模块，然后再刷入 AnyKernel 内核**
+<details>
+<summary><strong>点击查看如何 fork 仓库</strong></summary>
+<p>
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/fork.png" width="150"/>
+</details>
+
+<details>
+<summary><strong>点击查看 Actions 在哪</strong></summary>
+<p>
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/dots_right_corner.png" width="150"/>
+<img src="https://github.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/tree/SukiSU-Ultra/cache_photo/Actions.png" width="150"/>
+</details>
+
 #####
 ## **更新日志：**
 - [x] **添加 KPM,VFS,ZRAM,Sufus 补丁的支持**
