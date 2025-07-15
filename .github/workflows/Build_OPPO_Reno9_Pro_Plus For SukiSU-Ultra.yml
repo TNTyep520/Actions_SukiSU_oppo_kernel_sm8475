@@ -1,43 +1,42 @@
-name: Build OPPO Reno9 Pro Plus For SukiSU Ultra
-
+name: Build Reno9 Pro Plus
 on:
   workflow_dispatch:
-    inputs:
+  inputs:
     SUKISU_META:
-        type: string
-        description: "分支/自定义版本标识"
-        required: false
-        default: "sufus-main/TNTyep520"
+      type: string
+      description: "分支/自定义版本标识"
+      required: false
+      default: "sufus-main/TNTyep520"
     KERNEL_SUFFIX:
-        type: string
-        description: "自定义内核后缀（留空保持默认）"
-        required: false
-        default: ""
+      type: string
+      description: "自定义内核后缀（留空保持默认）"
+      required: false
+      default: ""
     LZ4:
-        type: boolean
-        description: "是否启用 lz4 1.10.0 + zstd 1.5.7 补丁"
-        required: true
-        default: true
+      type: boolean
+      description: "是否启用 lz4 1.10.0 + zstd 1.5.7 补丁"
+      required: true
+      default: true
     VFS:
-        type: boolean
-        description: "是否启用手动钩子（VFS）"
-        required: true
-        default: true
+      type: boolean
+      description: "是否启用手动钩子（VFS）"
+      required: true
+      default: true
     SSG:
-        type: boolean
-        description: "是否启用三星 SSG IO 调度器"
-        required: true
-        default: true
+      type: boolean
+      description: "是否启用三星 SSG IO 调度器"
+      required: true
+      default: true
     KPM:
-        type: boolean
-        description: "是否启用内核模块（KPM）"
-        required: true
-        default: true
+      type: boolean
+      description: "是否启用内核模块（KPM）"
+      required: true
+      default: true
     ZRAM:
-        type: boolean
-        description: "是否启用 ZRAM 算法"
-        required: true
-        default: false
+      type: boolean
+      description: "是否启用 ZRAM 算法"
+      required: true
+      default: false
 
 jobs:
    build:
