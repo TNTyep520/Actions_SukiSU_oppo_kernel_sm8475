@@ -39,7 +39,7 @@ on:
       default: false
 
 jobs:
-  build:
+ build:
    runs-on: ubuntu-latest
    env:
      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
