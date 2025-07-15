@@ -4,37 +4,37 @@ on:
   inputs:
     SUKISU_META:
       type: string
-      description: "ÂàÜÊîØ/Ëá™ÂÆö‰πâÁâàÊú¨Ê†áËØÜ"
+      description: "∑÷÷ß/◊‘∂®“Â∞Ê±æ±Í ∂"
       required: false
       default: "sufus-main/TNTyep520"
     KERNEL_SUFFIX:
       type: string
-      description: "Ëá™ÂÆö‰πâÂÜÖÊ†∏ÂêéÁºÄÔºàÁïôÁ©∫‰øùÊåÅÈªòËÆ§Ôºâ"
+      description: "◊‘∂®“Âƒ⁄∫À∫Û◊∫£®¡Ùø’±£≥÷ƒ¨»œ£©"
       required: false
       default: ""
     LZ4:
       type: boolean
-      description: "ÊòØÂê¶ÂêØÁî® lz4 1.10.0 + zstd 1.5.7 Ë°•‰∏Å"
+      description: " «∑Ò∆Ù”√ lz4 1.10.0 + zstd 1.5.7 ≤π∂°"
       required: true
       default: true
     VFS:
       type: boolean
-      description: "ÊòØÂê¶ÂêØÁî®ÊâãÂä®Èí©Â≠êÔºàVFSÔºâ"
+      description: " «∑Ò∆Ù”√ ÷∂Øπ≥◊”£®VFS£©"
       required: true
       default: true
     SSG:
       type: boolean
-      description: "ÊòØÂê¶ÂêØÁî®‰∏âÊòü SSG IO Ë∞ÉÂ∫¶Âô®"
+      description: " «∑Ò∆Ù”√»˝–« SSG IO µ˜∂»∆˜"
       required: true
       default: true
     KPM:
       type: boolean
-      description: "ÊòØÂê¶ÂêØÁî®ÂÜÖÊ†∏Ê®°ÂùóÔºàKPMÔºâ"
+      description: " «∑Ò∆Ù”√ƒ⁄∫Àƒ£øÈ£®KPM£©"
       required: true
       default: true
     ZRAM:
       type: boolean
-      description: "ÊòØÂê¶ÂêØÁî® ZRAM ÁÆóÊ≥ï"
+      description: " «∑Ò∆Ù”√ ZRAM À„∑®"
       required: true
       default: false
 
@@ -125,20 +125,20 @@ jobs:
        INIT_FLAG="${{ env.CCACHE_DIR }}/.ccache_initialized"
        if command -v ccache >/dev/null 2>&1; then
        if [ ! -f "$INIT_FLAG" ]; then
-        echo "ÂàùÂßãÂåñ Ccache (${{ env.CCACHE_DIR }})..."
+        echo "≥ı ºªØ Ccache (${{ env.CCACHE_DIR }})..."
         mkdir -p "${{ env.CCACHE_DIR }}"
         ccache -M ${{ env.CCACHE_MAXSIZE }}
         touch "$INIT_FLAG"
-        echo "Ccache ÂàùÂßãÂåñÂÆåÊàê"
+        echo "Ccache ≥ı ºªØÕÍ≥…"
        else
-        echo "Ccache Â∑≤ÂàùÂßãÂåñÔºåË∑≥Ëøá"
+        echo "Ccache “—≥ı ºªØ£¨Ã¯π˝"
         fi
        else
-        echo "Êú™ÂÆâË£Ö CcacheÔºåË∑≥Ëøá"
+        echo "Œ¥∞≤◊∞ Ccache£¨Ã¯π˝"
         fi
        ccache -s
 
-    # ÊãâÂèñÂÜÖÊ†∏Ê∫êÁ†Å && ÂéªÈô§ ABI ‰øùÊä§ && -dirty ÂêéÁºÄ
+    # ¿≠»°ƒ⁄∫À‘¥¬Î && »•≥˝ ABI ±£ª§ && -dirty ∫Û◊∫
     - name: Pull Kernel Open Source
       run: |
        cd $HOME
@@ -154,13 +154,13 @@ jobs:
        git add -A
        git commit -m "Force remove -dirty suffix from kernel version"
 
-    # Ê∑ªÂä† SukiSU Ultra
+    # ÃÌº” SukiSU Ultra
     - name: Add SukiSU Ultra
       run: |
        BRANCH_NAME="${META%%/*}"
        CUSTOM_TAG="${META#*/}"
-       echo "ÂàÜÊîØÂêç: $BRANCH_NAME"
-       echo "Ëá™ÂÆö‰πâÁâàÊú¨Ê†áËØÜ: $CUSTOM_TAG"
+       echo "∑÷÷ß√˚: $BRANCH_NAME"
+       echo "◊‘∂®“Â∞Ê±æ±Í ∂: $CUSTOM_TAG"
 
        cd $HOME && cd kernel_workspace
        curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
@@ -204,7 +204,7 @@ jobs:
        echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
 
 
-    # Â∫îÁî® SukiSU Ultra && Sufus,Lz4k Ë°•‰∏Å
+    # ”¶”√ SukiSU Ultra && Sufus,Lz4k ≤π∂°
     - name: Patch SukiSU Ultra && Sufus,Lz4k
       run: |
        cd $HOME && cd kernel_workspace
@@ -221,7 +221,7 @@ jobs:
        patch -p1 < 50_add_susfs_in_gki-android12-5.10.patch || true
        patch -p1 < syscall_hooks.patch || true
 
-    # Â∫îÁî® Hide Stuff Ë°•‰∏Å
+    # ”¶”√ Hide Stuff ≤π∂°
     - name: Apply Hide Stuff Patches
       run: |
        cd kernel_workspace/common
@@ -253,7 +253,7 @@ jobs:
        patch -p1 -F 3 < lz4k_oplus.patch || true
 
     - name: Apply lz4 && zstd
-      if ${{ github.event.inputs.LZ4 == 'true' }}
+      if: ${{ github.event.inputs.LZ4 == 'true' }}
       run: |
        cd kernel_workspace
        wget https://raw.githubusercontent.com/TNTyep520/Actions_SukiSU_oppo_kernel_sm8475/SukiSU-Ultra/Patches/zram_patch/lz4/001-lz4.patch
@@ -268,7 +268,7 @@ jobs:
 
     - name: Custom Kernel Suffix if set
       if [ "${{ github.event.inputs.KERNEL_SUFFIX }}" = "true" ]; then
-       echo "ÂΩìÂâçÂÜÖÊ†∏ÁâàÊú¨ÂêéÁºÄÔºö${{ github.event.inputs.KERNEL_SUFFIX }}"
+       echo "µ±«∞ƒ⁄∫À∞Ê±æ∫Û◊∫£∫${{ github.event.inputs.KERNEL_SUFFIX }}"
        for f in ./common/scripts/setlocalversion; do
        sed -i "\$s|echo \"\\\$res\"|echo \"-${{ github.event.inputs.KERNEL_SUFFIX }}\"|" "$f"
        done
@@ -302,15 +302,15 @@ jobs:
        CONFIG_FILE=./common/arch/arm64/configs/gki_defconfig
        KERNEL_VERSION="5.10"
 
-       # SukiSU Ultra ÈÖçÁΩÆ
+       # SukiSU Ultra ≈‰÷√
        echo "CONFIG_KSU=y" >> "$CONFIG_FILE"
 
-       # KPM ÈÖçÁΩÆ
+       # KPM ≈‰÷√
        if [ "${{ github.event.inputs.KPM }}" = "true" ]; then
         echo "CONFIG_KPM=y" >> "$CONFIG_FILE"
        fi
 
-       # VFS ÈÖçÁΩÆ
+       # VFS ≈‰÷√
        if [ "${{ github.event.inputs.VFS }}" = "true" ]; then
         echo "CONFIG_KSU_SUSFS_SUS_SU=y" >> "$CONFIG_FILE"
         echo "CONFIG_KSU_MANUAL_HOOK=n" >> "$CONFIG_FILE"
@@ -320,7 +320,7 @@ jobs:
         echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$CONFIG_FILE"
        fi
 
-       # SUSFS ÈÖçÁΩÆ
+       # SUSFS ≈‰÷√
        echo "CONFIG_KSU_SUSFS=y" >> "$CONFIG_FILE"
        echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> "$CONFIG_FILE"
        echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> "$CONFIG_FILE"
@@ -337,7 +337,7 @@ jobs:
        echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> "$CONFIG_FILE"
        echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> "$CONFIG_FILE"
 
-       # lz4 && zstd ÈÖçÁΩÆ
+       # lz4 && zstd ≈‰÷√
        if [ "${{ github.event.inputs.LZ4 }}" = "true" ]; then
         echo "CONFIG_ZSMALLOC=y" >> "$CONFIG_FILE"
         echo "CONFIG_CRYPTO_LZ4HC=y" >> "$CONFIG_FILE"
@@ -345,11 +345,11 @@ jobs:
         echo "CONFIG_CRYPTO_LZ4KD=y" >> "$CONFIG_FILE"
         echo "CONFIG_CRYPTO_842=y" >> "$CONFIG_FILE"
 
-        # TMPFS ÈÖçÁΩÆ
+        # TMPFS ≈‰÷√
         echo "CONFIG_TMPFS_XATTR=y" >> "$CONFIG_FILE"
         echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$CONFIG_FILE"
 
-        # BBR ÈÖçÁΩÆ
+        # BBR ≈‰÷√
         echo "CONFIG_TCP_CONG_ADVANCED=y" >> "$CONFIG_FILE"
         echo "CONFIG_TCP_CONG_BBR=y" >> "$CONFIG_FILE"
         echo "CONFIG_NET_SCH_FQ=y" >> "$CONFIG_FILE"
@@ -357,18 +357,18 @@ jobs:
         echo "CONFIG_TCP_CONG_WESTWOOD=n" >> "$CONFIG_FILE"
         echo "CONFIG_TCP_CONG_HTCP=n" >> "$CONFIG_FILE"
 
-        # ECN ÈÖçÁΩÆ
+        # ECN ≈‰÷√
         echo "CONFIG_IP_ECN=y" >> "$CONFIG_FILE"
         echo "CONFIG_TCP_ECN=y" >> "$CONFIG_FILE"
         echo "CONFIG_IPV6_ECN=y" >> "$CONFIG_FILE"
         echo "CONFIG_IP_NF_TARGET_ECN=y" >> "$CONFIG_FILE"
 
-        # SSG IO ÈÖçÁΩÆ
+        # SSG IO ≈‰÷√
         if [ "${{ github.event.inputs.LZ4 }}" = "true" ]; then
          echo "CONFIG_MQ_IOSCHED_SSG=y" >> $CONFIG_FILE
          echo "CONFIG_MQ_IOSCHED_SSG_CGROUP=y" >> $CONFIG_FILE
 
-         # ZRAM ÈÖçÁΩÆ
+         # ZRAM ≈‰÷√
          if [ "${{ github.event.inputs.ZRAM }}" = "true" ]; then
           echo "CONFIG_CRYPTO_LZ4HC=y" >> "$CONFIG_FILE"
           echo "CONFIG_CRYPTO_LZ4K=y" >> "$CONFIG_FILE"
@@ -378,7 +378,7 @@ jobs:
           echo "CONFIG_ZRAM_WRITEBACK=y" >> "$CONFIG_FILE"
          fi
 
-         # Á¶ÅÁî® defconfig ÂÆ°Êü•
+         # Ω˚”√ defconfig …Û≤È
          sed -i 's/check_defconfig//' ./common/build.config.gki
 
     - name: Build Kernel
@@ -412,9 +412,9 @@ jobs:
        image_path=$(find "./kernel_workspace/common/out/" -name "Image" | head -n 1)
        if [ -n "$image_path" ]; then
        dir1=$(dirname "$image_path")/
-       echo "‰ΩøÁî® make ÁºñËØëÁöÑÁªü‰∏ÄË∑ØÂæÑÔºåÊàêÂäüÊâæÂà∞ Image Êñá‰ª∂"
+       echo " π”√ make ±‡“ÎµƒÕ≥“ª¬∑æ∂£¨≥…π¶’“µΩ Image Œƒº˛"
        else
-       echo "Êú™ÊâæÂà∞ Image Êñá‰ª∂ÔºåÊûÑÂª∫Â§±Ë¥•" >&2
+       echo "Œ¥’“µΩ Image Œƒº˛£¨ππΩ® ß∞‹" >&2
        exit 1
        fi
        if [ -n "$image_path" ] && [ -f "$image_path" ]; then
@@ -470,7 +470,7 @@ jobs:
        grep "browser_download_url" | grep "ZRAM-Module-.*\.zip" | cut -d '"' -f 4 | xargs wget -N
        unzip "$(ls -t ZRAM-Module-*.zip | head -1)" -d ZRAM-Module
        target="./ZRAM-Module/zram/zram.ko"
-       echo "Êü•Êâæ zram.ko Ê®°ÂùóÊñá‰ª∂..."
+       echo "≤È’“ zram.ko ƒ£øÈŒƒº˛..."
        search_paths=(
           "./kernel_workspace/out"
           "./kernel_workspace/device/qcom"
@@ -489,10 +489,10 @@ jobs:
        if [ "$(realpath "$zram_path")" != "$(realpath "$target")" ]; then
         cp "$zram_path" "$target"
        else
-        echo "Ê∫êÊñá‰ª∂‰∏éÁõÆÊ†áË∑ØÂæÑÁõ∏ÂêåÔºåË∑≥ËøáÂ§çÂà∂"
+        echo "‘¥Œƒº˛”Îƒø±Í¬∑æ∂œ‡Õ¨£¨Ã¯π˝∏¥÷∆"
          fi
         else
-         echo "Êú™ÊâæÂà∞ zram.ko Êñá‰ª∂ÔºåÂèØËÉΩÊòØÊú™ÊîØÊåÅÁöÑÂÜÖÊ†∏ÁâàÊú¨ÊàñËÄÖÊú™ÊàêÂäüÊûÑÂª∫"
+         echo "Œ¥’“µΩ zram.ko Œƒº˛£¨ø…ƒ‹ «Œ¥÷ß≥÷µƒƒ⁄∫À∞Ê±æªÚ’ﬂŒ¥≥…π¶ππΩ®"
          echo "upload=false" >> "$GITHUB_OUTPUT"
          exit 0
            fi
