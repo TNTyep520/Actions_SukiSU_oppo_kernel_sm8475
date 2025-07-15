@@ -39,8 +39,8 @@ on:
       default: false
 
 jobs:
-   build:
-    runs-on: ubuntu-latest
+  build:
+   runs-on: ubuntu-latest
    env:
      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
      CCACHE_NOHASHDIR: "true"
