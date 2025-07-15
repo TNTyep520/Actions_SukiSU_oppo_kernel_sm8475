@@ -149,8 +149,6 @@ jobs:
        sed -i 's/ -dirty//g' msm-kernel/scripts/setlocalversion
        sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' common/scripts/setlocalversion
        sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' msm-kernel/scripts/setlocalversion
-       git add -A
-       git commit -m "Force remove -dirty suffix from kernel version"
 
     # 添加 SukiSU Ultra
     - name: Add SukiSU Ultra
